@@ -133,6 +133,7 @@ export default {
       })
 
       this.isOpenComments = true
+      this.loading = false
     }
   },
   computed: {
