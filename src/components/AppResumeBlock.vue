@@ -4,7 +4,8 @@
     <div v-if="content.length !== 0">
 	    <component
 				v-for="block in content"
-				:key="block.id" :is=" 'app-' + block.type"
+				:key="block.id"
+        :is=" 'form-' + block.type"
 				:text="block.text"
 			>{{ block.text }}</component>
     </div>
@@ -15,10 +16,10 @@
 </template>
 
 <script>
-import AppTitle from "./AppTitle.vue";
-import AppSubtitle from "./AppSubtitle.vue";
-import AppAvatar from "./AppAvatar.vue";
-import AppText from "./AppText.vue";
+import formTitle from "./formTitle.vue";
+import formSubtitle from "./formSubtitle.vue";
+import formAvatar from "./formAvatar.vue";
+import formText from "./formText.vue";
 
 export default {
   props: {
@@ -26,10 +27,10 @@ export default {
 		'content': Array
 	},
   components: {
-    AppTitle,
-    AppSubtitle,
-    AppAvatar,
-    AppText,
+    formTitle,
+    formSubtitle,
+    formAvatar,
+    formText,
   },
 };
 </script>

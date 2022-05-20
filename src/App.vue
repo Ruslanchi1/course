@@ -1,55 +1,38 @@
 <template>
   <div class="container column">
-    <form class="card card-w30" @submit.prevent="addContent">
-      <!-- <div class="form-control">
-        <label for="type">Тип блока</label>
-        <select id="type" v-model="type">
-          <option value="title">Заголовок</option>
-          <option value="subtitle">Подзаголовок</option>
-          <option value="avatar">Аватар</option>
-          <option value="text">Текст</option>
-        </select>
-      </div> -->
-      <div class="form-control">
-        <label for="type">Тип блока</label>
-        <select id="type" v-model="type">
-          <option
-            v-for="(type, idx) in types"
-            :key="idx"
-            :value="type.value"
-          >
-            {{type.label}}
-          </option>    
-        </select>
-      </div>
 
-      <div class="form-control">
-        <label for="value">Значение</label>
-        <textarea id="value" rows="3" @keydown.enter="addContent" v-model.trim="contentText"></textarea>
-      </div>
-
-      <button class="btn primary" :disabled="isDisabled">Добавить</button>
-    </form>
+    <app-form
+      :addContent="addContent"
+      label1="Тип заголовка"
+      label2="Значение"
+      :typeOfBlock="type"
+      :types="types"
+      :textarea="contentText"
+      :isDisabled="isDisabled"
+      buttonText="Добавить"
+    ></app-form>
 
     <app-resume-block 
       :typeOfBlock="type"
       :content="contentBlocks"
       :textarea="contentText"
     ></app-resume-block> 
-    <!-- resumeBlock -->
     
   </div>
-  <!-- comments -->
+
   <app-comments
     @addComments="loadComments"
     :isOpen="isOpenComments"
     :isNotLoad="loading"
     :comments="comments"
+    buttonText="Загрузить комментарии"
+    title="Комментарии"
   ></app-comments>
-  <!-- <app-loading v-if="loading"></app-loading> -->
+  
 </template>
 
 <script>
+import AppForm from './components/AppForm'
 import AppResumeBlock from './components/AppResumeBlock'
 import AppComments from './components/AppComments'
 // import AppLoading from './components/AppLoader.vue'
@@ -80,7 +63,8 @@ export default {
       comments: [],
       contentText: '',
       isOpenComments: false,
-      loading: false
+      loading: false,
+      resumeResponse: 'https://course-work2-67ded-default-rtdb.firebaseio.com/resume.json'
     }
   },
   mounted() {
@@ -88,7 +72,7 @@ export default {
   },
   methods: {
     async addContent () {    
-      const response = await fetch('https://course-work2-67ded-default-rtdb.firebaseio.com/resume.json', {
+      const response = await fetch( this.resumeResponse, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
@@ -110,7 +94,7 @@ export default {
       this.contentText = ''
     },
     async loadContent () {
-      const response =  await fetch('https://course-work2-67ded-default-rtdb.firebaseio.com/resume.json')
+      const response =  await fetch( this.resumeResponse)
       const data = await response.json()
 
       this.contentBlocks = Object.keys(data).map( key => {
@@ -144,20 +128,11 @@ export default {
   components: {
     AppResumeBlock,
     AppComments,
-    // AppLoading
+    AppForm
   }
 }
 </script>
 
 <style>
-  .avatar {
-    display: flex;
-    justify-content: center;
-  }
 
-  .avatar img {
-    width: 150px;
-    height: auto;
-    border-radius: 50%;
-  }
 </style>

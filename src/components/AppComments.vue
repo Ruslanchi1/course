@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <p v-if="!isOpen">
-      <button class="btn primary" @click="$emit('addComments')">Загрузить комментарии</button>
+      <button class="btn primary" @click="$emit('addComments')"> {{ buttonText }} </button>
     </p>
     <div class="card" v-if="isOpen">
-      <h2>Комментарии</h2>
+      <h2> {{ title }} </h2>
       <ul class="list">
         <li class="list-item" v-for="comment in comments" :key="comment.id">
           <div>
@@ -16,8 +16,9 @@
         </li>
       </ul>
     </div>
-    <!-- <div v-else class="loader"></div> -->
+
     <app-loader v-if="isNotLoad"></app-loader>
+    
   </div>
 </template>
 
@@ -26,11 +27,13 @@ import AppLoader from './AppLoader.vue'
 
 export default {
   emits: ['addComments'],
-  props: [
-    'isOpen',
-    'isNotLoad',
-    'comments'
-  ],
+  props:{ 
+    'isOpen': Boolean,
+    'isNotLoad': Boolean,
+    'comments': Array,
+    'buttonText': String,
+    'title': String
+  },
   components: {
     AppLoader
   }
