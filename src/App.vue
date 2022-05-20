@@ -20,17 +20,6 @@
       ></app-button>
     </form>
 
-    <!-- <app-form
-      @submit="addContent"
-      :load="loadContent"
-      label1="Тип заголовка"
-      label2="Значение"
-      :typeOfBlock="type"
-      :types="types"
-      buttonText="Добавить"
-      v-model.trim="contentText"
-    ></app-form> -->
-
     <app-resume-block
       :typeOfBlock="type"
       :content="contentBlocks"
